@@ -2,22 +2,15 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 
-<SplitPane fx:id="view" dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17">
+<SplitPane fx:id="view" dividerPositions="0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <items>
       <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
          <center>
@@ -55,34 +48,17 @@
             <Insets bottom="5.0" right="5.0" top="5.0" />
          </padding>
       </BorderPane>
-      <GridPane hgap="5.0" minHeight="-Infinity" minWidth="-Infinity" vgap="5.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="-Infinity" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-          <RowConstraints vgrow="SOMETIMES" />
-          <RowConstraints vgrow="SOMETIMES" />
-          <RowConstraints vgrow="SOMETIMES" />
-        </rowConstraints>
+      <BorderPane fx:id="formularioBorderPane">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
          <padding>
-            <Insets bottom="5.0" left="5.0" top="5.0" />
+            <Insets top="5.0" />
          </padding>
-         <children>
-            <Label text="Nombre:" />
-            <Label text="Apellidos:" GridPane.rowIndex="1" />
-            <Label text="Fecha de nacimiento:" GridPane.rowIndex="2" />
-            <Label text="Sexo:" GridPane.rowIndex="3" />
-            <Label text="Repite:" GridPane.rowIndex="4" />
-            <TextField GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <CheckBox mnemonicParsing="false" text="CheckBox" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-         </children>
-      </GridPane>
+         <center>
+            <Label fx:id="noSelectedLabel" text="Seleccione un alumno en la tabla de la izquierda." BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
    </items>
    <padding>
       <Insets left="5.0" right="5.0" />

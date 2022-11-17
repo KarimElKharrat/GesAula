@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -15,22 +16,26 @@ import javafx.scene.layout.GridPane;
 public class GrupoController implements Initializable {
 
 	@FXML
+    private Label examenesLabel;
+	@FXML
+    private Label practicasLabel;
+	@FXML
+    private Label actitudLabel;
+	
+	@FXML
+	private Slider examenesSlider;
+	@FXML
+	private Slider practicasSlider;
+	@FXML
     private Slider actitudSlider;
 
     @FXML
     private TextField denominacionText;
 
     @FXML
-    private Slider examenesSlider;
-
-    @FXML
     private DatePicker finDate;
-
     @FXML
     private DatePicker inicioDate;
-
-    @FXML
-    private Slider practicasSlider;
 
     @FXML
     private GridPane view;
@@ -48,6 +53,18 @@ public class GrupoController implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
+		// bindings
+		
+		MainController.grupo.denominacionProperty().bind(denominacionText.textProperty());
+		MainController.grupo.iniCursoProperty().bind(inicioDate.valueProperty());
+		MainController.grupo.finCursoProperty().bind(finDate.valueProperty());
+		MainController.grupo.getPesos().examenesProperty().bind(examenesSlider.valueProperty());
+		MainController.grupo.getPesos().practicasProperty().bind(practicasSlider.valueProperty());
+		MainController.grupo.getPesos().actitudProperty().bind(actitudSlider.valueProperty());
+		examenesLabel.textProperty().bind(MainController.grupo.getPesos().examenesProperty().asString("%.2f%%"));
+		practicasLabel.textProperty().bind(MainController.grupo.getPesos().practicasProperty().asString("%.2f%%"));
+		actitudLabel.textProperty().bind(MainController.grupo.getPesos().actitudProperty().asString("%.2f%%"));
 		
 	}
 	

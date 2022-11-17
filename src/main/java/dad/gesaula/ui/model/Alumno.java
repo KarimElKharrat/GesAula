@@ -27,6 +27,9 @@ public class Alumno {
 		fechaNacimiento = new SimpleObjectProperty<LocalDate>(this, "fechaNacimiento");
 		sexo = new SimpleObjectProperty<Sexo>(this, "sexo");
 		repite = new SimpleBooleanProperty(this, "repite", false);
+		
+		setNombre("Sin nombre");
+		setApellidos("Sin apellidos");
 	}
 
 	public StringProperty nombreProperty() {

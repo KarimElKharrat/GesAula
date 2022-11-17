@@ -10,6 +10,7 @@ public class GesAulaApp extends Application {
 
 	private MainController controller = new MainController();
 	public static Stage primaryStage;
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
