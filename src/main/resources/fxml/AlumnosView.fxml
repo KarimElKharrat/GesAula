@@ -33,7 +33,7 @@
                         <ImageView fx:id="nuevoImage" pickOnBounds="true" preserveRatio="true" />
                      </graphic>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onEliminarAction" text="Eliminar">
+                  <Button fx:id="eliminarButton" mnemonicParsing="false" onAction="#onEliminarAction" text="Eliminar">
                      <graphic>
                         <ImageView fx:id="eliminarImage" pickOnBounds="true" preserveRatio="true" />
                      </graphic>

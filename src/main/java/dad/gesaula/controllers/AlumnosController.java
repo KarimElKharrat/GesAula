@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
@@ -37,6 +38,9 @@ public class AlumnosController implements Initializable {
 
 	@FXML
     private Label noSelectedLabel;
+	
+	@FXML
+    private Button eliminarButton;
 	
     @FXML
     private TableColumn<Alumno, String> nombreColumn;
@@ -89,6 +93,7 @@ public class AlumnosController implements Initializable {
 		// bindings
 		
 		datosAlumnoTable.itemsProperty().bind(MainController.grupo.alumnosProperty());
+		eliminarButton.disableProperty().bind(datosAlumnoTable.getSelectionModel().selectedItemProperty().isNull());
 		
 		// cell value factories
 		
