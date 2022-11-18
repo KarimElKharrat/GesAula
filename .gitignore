@@ -13,3 +13,5 @@ bin/
 .classpath
 .project
 .settings
+
+xml/

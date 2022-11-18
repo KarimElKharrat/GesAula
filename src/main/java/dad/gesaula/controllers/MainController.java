@@ -61,10 +61,12 @@ public class MainController implements Initializable {
 	void onGuardarAction(ActionEvent event) {
 		
 		try {
-			File file = new File(nombreText.getText() + ".xml");
-			if(!file.exists())
-				file.createNewFile();
-			MainController.grupo.save(file);
+			if(!nombreText.getText().isBlank()) {
+				File file = new File(nombreText.getText() + ".xml");
+				if(!file.exists())
+					file.createNewFile();
+				MainController.grupo.save(file);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -73,6 +75,7 @@ public class MainController implements Initializable {
 	@FXML
 	void onNuevoAction(ActionEvent event) {
 		
+		nombreText.setText("");
 		MainController.grupo = new Grupo();
 		grupoController = new GrupoController();
 		alumnosController = new AlumnosController();
