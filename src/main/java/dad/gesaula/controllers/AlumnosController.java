@@ -8,6 +8,11 @@ import java.util.ResourceBundle;
 
 import dad.gesaula.GesAulaApp;
 import dad.gesaula.ui.model.Alumno;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,7 +33,7 @@ public class AlumnosController implements Initializable {
 	
 	// model
 	
-//	private ListProperty<Alumno> alumnos = new SimpleListProperty<>(FXCollections.observableArrayList());
+	private ListProperty<Alumno> alumnos = new SimpleListProperty<>(FXCollections.observableArrayList());
 
 	// controllers
 	
@@ -76,30 +81,15 @@ public class AlumnosController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		datosAlumnoTable.getSelectionModel().selectedItemProperty().addListener((o, ov, nv) -> {
-			
-			if(nv != null) {
-				formularioController = new FormularioController();
-				formularioController.setDatos(nv);
-				formularioBorderPane.setTop(formularioController.getView());
-				noSelectedLabel.setVisible(false);
-			} else {
-				formularioBorderPane.setTop(null);
-				noSelectedLabel.setVisible(true);
-			}
-			
-		});
+		// listeners
+		
+		datosAlumnoTable.getSelectionModel().selectedItemProperty().addListener(this::onSelectedItem);
+		
+		alumnos.addListener(this::onChangeListener);
 		
 		// bindings
 		
-		datosAlumnoTable.itemsProperty().bind(MainController.grupo.alumnosProperty());
 		eliminarButton.disableProperty().bind(datosAlumnoTable.getSelectionModel().selectedItemProperty().isNull());
-		
-		// cell value factories
-		
-		nombreColumn.setCellValueFactory(v -> v.getValue().nombreProperty());
-		apellidosColumn.setCellValueFactory(v -> v.getValue().apellidosProperty());
-		fechaNacimientoColumn.setCellValueFactory(v -> v.getValue().fechaNacimientoProperty());
 		
 		// load data
 		
@@ -107,7 +97,43 @@ public class AlumnosController implements Initializable {
 		eliminarImage.setImage(new Image(getClass().getResource("/images/del-32x32.png").toString()));
 		
 	}
+
+	private void onChangeListener(ObservableValue<? extends ObservableList<Alumno>> o, ObservableList<Alumno> ov, ObservableList<Alumno> nv) {
+		
+		if(ov != null) {
+			
+			datosAlumnoTable.itemsProperty().unbind();
+			
+		}
+		
+		if(nv != null) {
+			
+			datosAlumnoTable.itemsProperty().bind(alumnos);
+			
+			// cell value factories
+			
+			nombreColumn.setCellValueFactory(v -> v.getValue().nombreProperty());
+			apellidosColumn.setCellValueFactory(v -> v.getValue().apellidosProperty());
+			fechaNacimientoColumn.setCellValueFactory(v -> v.getValue().fechaNacimientoProperty());
+			
+		}
+		
+	}
 	
+	private void onSelectedItem(ObservableValue<? extends Alumno> o, Alumno ov, Alumno nv) {
+			
+		if(nv != null) {
+			formularioController = new FormularioController();
+			formularioController.setDatos(nv);
+			formularioBorderPane.setTop(formularioController.getView());
+			noSelectedLabel.setVisible(false);
+		} else {
+			formularioBorderPane.setTop(null);
+			noSelectedLabel.setVisible(true);
+		}
+		
+	}
+
 	@FXML
 	void onEliminarAction(ActionEvent event) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -123,23 +149,35 @@ public class AlumnosController implements Initializable {
     	
     	Optional<ButtonType> result = alert.showAndWait();
     	if (result.get() == ButtonType.OK){
-    		MainController.grupo.getAlumnos().remove(datosAlumnoTable.getSelectionModel().getSelectedItem());
+    		alumnos.get().remove(datosAlumnoTable.getSelectionModel().getSelectedItem());
     	}
 		
 	}
 	
 	@FXML
 	void onNuevoAction(ActionEvent event) {
-		MainController.grupo.getAlumnos().add(new Alumno());
+		alumnos.get().add(new Alumno());
 	}
 	
 	public void clear() {
 		datosAlumnoTable.getItems().clear();
-		datosAlumnoTable.itemsProperty().bind(MainController.grupo.alumnosProperty());
+		datosAlumnoTable.itemsProperty().bind(alumnos);
 	}	
 
 	public SplitPane getView() {
 		return view;
+	}
+
+	public final ListProperty<Alumno> alumnosProperty() {
+		return this.alumnos;
+	}
+	
+	public final ObservableList<Alumno> getAlumnos() {
+		return this.alumnosProperty().get();
+	}
+
+	public final void setAlumnos(final ObservableList<Alumno> alumnos) {
+		this.alumnosProperty().set(alumnos);
 	}
 	
 }

@@ -6,6 +6,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import dad.gesaula.ui.model.Grupo;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +21,7 @@ public class MainController implements Initializable {
 
 	// model
 	
-	public static Grupo grupo = new Grupo();
+	public ObjectProperty<Grupo> grupo = new SimpleObjectProperty<>();
 	
 	// controllers
 	
@@ -53,10 +56,30 @@ public class MainController implements Initializable {
 		
 		// tab content
 		
-		tabContent();
+		grupoTab.setContent(grupoController.getView());
+		alumnosTab.setContent(alumnosController.getView());
+		
+		// listeners
+		
+		grupo.addListener(this::onGrupoChangeListener);
+		grupo.set(new Grupo());
 		
 	}
 	
+	private void onGrupoChangeListener(ObservableValue<? extends Grupo> o, Grupo ov, Grupo nv) {
+		
+		if(ov != null) {
+			alumnosController.alumnosProperty().unbind();
+			grupoController.grupoProperty().unbind();
+		}
+		
+		if(nv != null) {
+			alumnosController.alumnosProperty().bind(grupo.get().alumnosProperty());
+			grupoController.grupoProperty().bind(grupo);
+		}
+		
+	}
+
 	@FXML
 	void onGuardarAction(ActionEvent event) {
 		
@@ -65,7 +88,7 @@ public class MainController implements Initializable {
 				File file = new File(nombreText.getText() + ".xml");
 				if(!file.exists())
 					file.createNewFile();
-				MainController.grupo.save(file);
+				grupo.get().save(file);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -76,16 +99,8 @@ public class MainController implements Initializable {
 	void onNuevoAction(ActionEvent event) {
 		
 		nombreText.setText("");
-		MainController.grupo = new Grupo();
-		grupoController = new GrupoController();
-		alumnosController = new AlumnosController();
-		tabContent();
+		grupo.set(new Grupo());
 		
-	}
-	
-	private void tabContent() {
-		grupoTab.setContent(grupoController.getView());
-		alumnosTab.setContent(alumnosController.getView());
 	}
 	
 	public BorderPane getView() {
