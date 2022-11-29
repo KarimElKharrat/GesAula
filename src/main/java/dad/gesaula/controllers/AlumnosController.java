@@ -25,7 +25,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 
@@ -91,11 +90,6 @@ public class AlumnosController implements Initializable {
 		
 		eliminarButton.disableProperty().bind(datosAlumnoTable.getSelectionModel().selectedItemProperty().isNull());
 		
-		// load data
-		
-		nuevoImage.setImage(new Image(getClass().getResource("/images/add-32x32.png").toString()));
-		eliminarImage.setImage(new Image(getClass().getResource("/images/del-32x32.png").toString()));
-		
 	}
 
 	private void onChangeListener(ObservableValue<? extends ObservableList<Alumno>> o, ObservableList<Alumno> ov, ObservableList<Alumno> nv) {
@@ -123,13 +117,17 @@ public class AlumnosController implements Initializable {
 	private void onSelectedItem(ObservableValue<? extends Alumno> o, Alumno ov, Alumno nv) {
 			
 		if(nv != null) {
+			
 			formularioController = new FormularioController();
 			formularioController.setDatos(nv);
 			formularioBorderPane.setTop(formularioController.getView());
 			noSelectedLabel.setVisible(false);
+			
 		} else {
+			
 			formularioBorderPane.setTop(null);
 			noSelectedLabel.setVisible(true);
+			
 		}
 		
 	}

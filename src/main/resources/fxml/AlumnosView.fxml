@@ -6,6 +6,7 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -30,12 +31,18 @@
                <children>
                   <Button mnemonicParsing="false" onAction="#onNuevoAction" text="Nuevo">
                      <graphic>
-                        <ImageView fx:id="nuevoImage" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="nuevoImage" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/add-32x32.png" />
+                           </image></ImageView>
                      </graphic>
                   </Button>
                   <Button fx:id="eliminarButton" mnemonicParsing="false" onAction="#onEliminarAction" text="Eliminar">
                      <graphic>
-                        <ImageView fx:id="eliminarImage" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="eliminarImage" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/del-32x32.png" />
+                           </image></ImageView>
                      </graphic>
                   </Button>
                </children>
